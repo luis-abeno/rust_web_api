@@ -6,6 +6,8 @@ This is a simple boilerplate for a web API using Rust.
 
 - [actix-web](https://actix.rs/)
 - [serde](https://serde.rs/)
+- [utoipa](https://github.com/juhaku/utoipa)
+- [utoipa-swagger-ui](https://crates.io/crates/utoipa-swagger-ui)
 
 ## Dev Dependencies
 
