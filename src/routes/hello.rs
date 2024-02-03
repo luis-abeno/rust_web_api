@@ -1,4 +1,3 @@
-// routes/mod.rs
 use actix_web::{web, HttpResponse, Responder};
 
 pub async fn route_index() -> impl Responder {
