@@ -1,10 +1,9 @@
 mod api_doc;
 mod routes;
 
-use std::net::Ipv4Addr;
-
 use actix_web::{web, App, HttpServer};
 use api_doc::ApiDoc;
+use std::net::Ipv4Addr;
 use utoipa::OpenApi;
 use utoipa_swagger_ui::SwaggerUi;
 

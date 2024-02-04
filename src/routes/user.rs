@@ -11,7 +11,6 @@ pub struct User {
 
 /// Create user struct to be used in the request body
 /// This struct will be used to deserialize the request body
-/// into a Rust struct
 #[derive(Serialize, Deserialize, ToSchema)]
 pub struct CreateUser {
     name: String,

@@ -1,5 +1,5 @@
 use crate::routes;
-use utoipa::OpenApi; // Import the missing `routes` module
+use utoipa::OpenApi;
 
 macro_rules! openapi_paths_and_schemas {
     ($($path:expr),*; $($schema:expr),*) => {
