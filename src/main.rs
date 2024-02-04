@@ -1,18 +1,12 @@
+mod api_doc;
 mod routes;
 
 use std::net::Ipv4Addr;
 
 use actix_web::{web, App, HttpServer};
+use api_doc::ApiDoc;
 use utoipa::OpenApi;
 use utoipa_swagger_ui::SwaggerUi;
-
-#[derive(OpenApi)]
-#[openapi(
-    info(description = "Rust web api"),
-    paths(routes::user::get_by_id, routes::user::add_user),
-    components(schemas(routes::user::User, routes::user::CreateUser))
-)]
-struct ApiDoc;
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
