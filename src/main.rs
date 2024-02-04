@@ -9,8 +9,8 @@ use utoipa_swagger_ui::SwaggerUi;
 #[derive(OpenApi)]
 #[openapi(
     info(description = "Rust web api"),
-    paths(routes::user::get_by_id),
-    components(schemas(routes::user::User))
+    paths(routes::user::get_by_id, routes::user::add_user),
+    components(schemas(routes::user::User, routes::user::CreateUser))
 )]
 struct ApiDoc;
 
