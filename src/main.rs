@@ -1,6 +1,5 @@
 mod api_doc;
 mod routes;
-
 use actix_web::{web, App, HttpServer};
 use api_doc::ApiDoc;
 use std::net::Ipv4Addr;
@@ -18,7 +17,7 @@ async fn main() -> std::io::Result<()> {
             )
             .service(
                 SwaggerUi::new("/swagger-ui/{_:.*}")
-                    .url("/api-docs/openapi.json", ApiDoc::openapi()),
+                    .url("/api-docs/openapi.json", ApiDoc::openapi()), // Call the openapi function on the ApiDoc struct
             )
     })
     .bind((Ipv4Addr::UNSPECIFIED, 8080))?;

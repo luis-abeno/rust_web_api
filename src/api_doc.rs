@@ -15,7 +15,9 @@ macro_rules! openapi_paths_and_schemas {
 
 openapi_paths_and_schemas!(
     routes::user::get_by_id,
-    routes::user::add_user;
+    routes::user::add_user,
+    routes::user::update_user,
+    routes::user::delete_user;
     routes::user::User,
-    routes::user::CreateUser
+    routes::user::UserMutable
 );

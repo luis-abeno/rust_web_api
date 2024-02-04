@@ -12,7 +12,7 @@ pub struct User {
 /// Create user struct to be used in the request body
 /// This struct will be used to deserialize the request body
 #[derive(Serialize, Deserialize, ToSchema)]
-pub struct CreateUser {
+pub struct UserMutable {
     name: String,
     email: String,
 }
@@ -50,7 +50,7 @@ pub async fn get_by_id(id: web::Path<u32>) -> impl Responder {
             (status = BAD_REQUEST, description = "Invalid user data")
         ),
     )]
-pub async fn add_user(user_data: web::Json<CreateUser>) -> impl Responder {
+pub async fn add_user(user_data: web::Json<UserMutable>) -> impl Responder {
     let user = User {
         id: 1,
         name: user_data.name.clone(),
@@ -60,7 +60,52 @@ pub async fn add_user(user_data: web::Json<CreateUser>) -> impl Responder {
     HttpResponse::Created().json(user)
 }
 
+/// Update a user
+#[utoipa::path(
+        put,
+        path = "/api/user/{id}",
+        responses(
+            (status = 200, description = "User updated successfully", body = User),
+            (status = BAD_REQUEST, description = "Invalid user data"),
+            (status = NOT_FOUND, description = "User was not found")
+        ),
+        params(
+            ("id" = u64, Path, description = "User database id to update user for"),
+        )
+    )]
+pub async fn update_user(id: web::Path<u32>, user_data: web::Json<UserMutable>) -> impl Responder {
+    let id = id.into_inner();
+
+    let user = User {
+        id,
+        name: user_data.name.clone(),
+        email: user_data.email.clone(),
+    };
+
+    HttpResponse::Ok().json(user)
+}
+
+/// Delete user
+#[utoipa::path(
+        delete,
+        path = "/api/user/{id}",
+        responses(
+            (status = 204, description = "User deleted successfully"),
+            (status = NOT_FOUND, description = "User was not found")
+        ),
+        params(
+            ("id" = u64, Path, description = "User database id to delete user for"),
+        )
+    )]
+pub async fn delete_user(id: web::Path<u32>) -> impl Responder {
+    let id: u32 = id.into_inner();
+    println!("Deleting user with id: {}", id);
+    HttpResponse::NoContent().finish()
+}
+
 pub fn config(cfg: &mut web::ServiceConfig) {
     cfg.route("/{id}", web::get().to(get_by_id))
-        .route("/add", web::post().to(add_user));
+        .route("/add", web::post().to(add_user))
+        .route("/{id}", web::put().to(update_user))
+        .route("/{id}", web::delete().to(delete_user));
 }
