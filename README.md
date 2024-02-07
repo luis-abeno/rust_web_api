@@ -2,6 +2,15 @@
 
 This is a simple boilerplate for a web API using Rust.
 
+## How to contribute
+
+If you want to contribute to this project, please follow the next steps:
+
+- Create a new branch from `develop`
+- Make your changes
+- Create a pull request to `develop`
+- Wait for the review
+
 ## Dependencies
 
 - [actix-web](https://actix.rs/)
