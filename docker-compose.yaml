@@ -1,0 +1,23 @@
+version: "3.1"
+
+services:
+  rust_web_api:
+    build: .
+    ports:
+      - "8080:8080"
+    depends_on:
+      # - postgres
+      - mongodb
+  mongodb:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    ports:
+      - "27017:27017"
+  # postgres:
+  #   image: postgres
+  #   restart: always
+  #   environment:
+  #     POSTGRES_PASSWORD: example
