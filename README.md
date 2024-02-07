@@ -77,3 +77,4 @@ cargo watch -x run
 - Add a simple example of how to handle migrations
 - Add a simple example of how to handle internationalization
 - Add a simple example of how to handle caching
+- Add a ORM? (diesel, prisma, sqlx, etc), or maybe a simple example of how to handle raw sql?
