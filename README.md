@@ -11,6 +11,28 @@ If you want to contribute to this project, please follow the next steps:
 - Create a pull request to `develop`
 - Wait for the review
 
+## Commit messages format
+
+- Use the following format for your commit messages:
+  - `[<type>] <description>`
+  - Where `<type>` can be:
+    - `feat`: for new features
+    - `fix`: for bug fixes
+    - `docs`: for changes in documentation
+    - `style`: for changes in code style
+    - `refactor`: for code refactoring
+    - `test`: for changes in tests
+    - `chore`: for changes in the build process or tools
+  - And `<description>` is a short description of the changes
+
+### Example
+
+```bash
+git commit -m "[feat] Add a new endpoint to get a user by id"
+git commit -m "[fix] Fix a bug in the user creation endpoint"
+git commit -m "[docs] Add a new section in the README file"
+```
+
 ## Dependencies
 
 - [actix-web](https://actix.rs/)
