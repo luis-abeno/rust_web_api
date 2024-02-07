@@ -34,4 +34,4 @@ cargo watch -x run
 - Add a mysql database
 - Add a mongodb database
 - Add a simple CRUD example
-- Add env files
+- Add env files to handle some configs
