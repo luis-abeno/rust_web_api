@@ -66,3 +66,14 @@ cargo watch -x run
 - Add a mongodb database
 - Add a simple CRUD example
 - Add env files to handle some configs
+- Add auto generation of change log based on commit messages
+- Add a CI/CD pipeline
+- Add data obfuscation to preserve user sensitive data
+- Add a simple authentication example using JWT
+- Add a simple authorization example using roles
+- Add a simple example of how to handle errors
+- Add a simple example of how to handle logs
+- Add a simple example of how to handle tests
+- Add a simple example of how to handle migrations
+- Add a simple example of how to handle internationalization
+- Add a simple example of how to handle caching
