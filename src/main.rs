@@ -3,20 +3,41 @@ mod models;
 mod routes;
 
 use actix_web::{
-    web::{self},
+    web::{self, Data},
     App, HttpResponse, HttpServer,
 };
 use api_doc::ApiDoc;
+use mongodb::{
+    options::{ClientOptions, ResolverConfig},
+    Client,
+};
 use std::net::Ipv4Addr;
+use std::{error::Error, sync::Mutex};
 use utoipa::OpenApi;
 use utoipa_swagger_ui::SwaggerUi;
 
-#[actix_web::main]
-async fn main() -> std::io::Result<()> {
-    let server = HttpServer::new(|| {
+pub async fn connect_to_mongodb() -> Result<Client, Box<dyn Error>> {
+    let client_uri = "mongodb://localhost:27017";
+    let client_options =
+        ClientOptions::parse_with_resolver_config(&client_uri, ResolverConfig::cloudflare())
+            .await?;
+    let client = Client::with_options(client_options)?;
+    Ok(client)
+}
+
+#[tokio::main]
+async fn main() -> Result<(), Box<dyn Error>> {
+    // Connect to the MongoDB database
+    let mongo_db_client: Client = connect_to_mongodb().await.unwrap();
+    let mongo_db_client: Data<Mutex<Client>> = Data::new(Mutex::new(mongo_db_client));
+
+    // TODO: Connect to the MySQL database
+    // TODO: Connect to the PostgreSQL database
+
+    let server = HttpServer::new(move || {
         App::new()
-            // A route just to guide user and dont leave the page empty
-            .route("/", web::get().to(welcome))
+            .app_data(Data::clone(&mongo_db_client)) // Add the mongodb client to the app data to make it available to the routes
+            .route("/", web::get().to(welcome)) // A route just to guide user and dont leave the page empty
             .route("/health", web::get().to(health_check)) // Health check
             // Main routes
             .service(
@@ -34,7 +55,8 @@ async fn main() -> std::io::Result<()> {
 
     println!("Server running on port 8080");
 
-    server.run().await
+    server.run().await?;
+    Ok(())
 }
 
 async fn health_check() -> HttpResponse {

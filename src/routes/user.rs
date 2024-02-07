@@ -1,5 +1,10 @@
 use crate::models::user::{User, UserMutable};
-use actix_web::{web, HttpResponse, Responder};
+use actix_web::{
+    web::{self, Data},
+    HttpResponse, Responder,
+};
+use mongodb::Client;
+use std::sync::{Arc, Mutex};
 
 /// Get user by id
 #[utoipa::path(
@@ -13,8 +18,19 @@ use actix_web::{web, HttpResponse, Responder};
             ("id" = u64, Path, description = "User database id to get user for"),
         )
     )]
-pub async fn get_by_id(id: web::Path<u32>) -> impl Responder {
+pub async fn get_by_id(id: web::Path<u32>, db: Data<Mutex<Client>>) -> impl Responder {
     let id = id.into_inner();
+
+    // TODO: Remove after implementing the database connection, just for testing
+    // for name in data
+    //     .lock()
+    //     .unwrap()
+    //     .list_database_names(None, None)
+    //     .await
+    //     .unwrap()
+    // {
+    //     println!("{}", name);
+    // }
 
     let user = User {
         id,
