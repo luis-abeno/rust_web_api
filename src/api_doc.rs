@@ -1,3 +1,4 @@
+use crate::models;
 use crate::routes;
 use utoipa::OpenApi;
 
@@ -22,6 +23,6 @@ openapi_paths_and_schemas!(
     routes::user::add_user,
     routes::user::update_user,
     routes::user::delete_user;
-    routes::user::User,
-    routes::user::UserMutable
+    models::user::User,
+    models::user::UserMutable
 );

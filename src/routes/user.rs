@@ -1,21 +1,5 @@
+use crate::models::user::{User, UserMutable};
 use actix_web::{web, HttpResponse, Responder};
-use serde::{Deserialize, Serialize};
-use utoipa::ToSchema;
-
-#[derive(Serialize, Deserialize, ToSchema)]
-pub struct User {
-    id: u32,
-    name: String,
-    email: String,
-}
-
-/// Create user struct to be used in the request body
-/// This struct will be used to deserialize the request body
-#[derive(Serialize, Deserialize, ToSchema)]
-pub struct UserMutable {
-    name: String,
-    email: String,
-}
 
 /// Get user by id
 #[utoipa::path(
@@ -53,8 +37,8 @@ pub async fn get_by_id(id: web::Path<u32>) -> impl Responder {
 pub async fn add_user(user_data: web::Json<UserMutable>) -> impl Responder {
     let user = User {
         id: 1,
-        name: user_data.name.clone(),
-        email: user_data.email.clone(),
+        name: user_data.0.name.clone(),
+        email: user_data.0.email.clone(),
     };
 
     HttpResponse::Created().json(user)
